@@ -12,7 +12,7 @@ namespace DPRCalculatorTests
         {
             Die d3 = new Die(3);
             string actual = d3.ToString();
-            string expected = "1/3*X^3 + 1/3*X^2 + 1/3*X";
+            string expected = "d3: 1/3*X^3 + 1/3*X^2 + 1/3*X";
             Assert.AreEqual(expected, actual);
         }
 
@@ -22,7 +22,7 @@ namespace DPRCalculatorTests
             int[] sides = {1,2,8,12,60};
             Die die = new Die(sides);
             string actual = die.ToString();
-            string expected = "1/5*X^60 + 1/5*X^12 + 1/5*X^8 + 1/5*X^2 + 1/5*X";
+            string expected = "d{1,2,8,12,60}: 1/5*X^60 + 1/5*X^12 + 1/5*X^8 + 1/5*X^2 + 1/5*X";
             Assert.AreEqual(expected, actual);
         }
 
@@ -32,7 +32,7 @@ namespace DPRCalculatorTests
             int[] sides = { 1, 8, 8, 12, 12 };
             Die die = new Die(sides);
             string actual = die.ToString();
-            string expected = "2/5*X^12 + 2/5*X^8 + 1/5*X";
+            string expected = "d{1,8,8,12,12}: 2/5*X^12 + 2/5*X^8 + 1/5*X";
             Assert.AreEqual(expected, actual);
         }
 
@@ -41,7 +41,7 @@ namespace DPRCalculatorTests
         {
             Die d3 = new Die(3);
             string actual = Die.AddDice(d3,d3).ToString();
-            string expected = "1/9*X^6 + 2/9*X^5 + 1/3*X^4 + 2/9*X^3 + 1/9*X^2";
+            string expected = "d3+d3: 1/9*X^6 + 2/9*X^5 + 1/3*X^4 + 2/9*X^3 + 1/9*X^2";
             Assert.AreEqual(expected, actual);
         }
 
@@ -51,7 +51,7 @@ namespace DPRCalculatorTests
             Die d3 = new Die(3);
             Die d4 = new Die(4);    
             string actual = Die.AddDice(d3, d4).ToString();
-            string expected = "1/12*X^7 + 1/6*X^6 + 1/4*X^5 + 1/4*X^4 + 1/6*X^3 + 1/12*X^2";
+            string expected = "d3+d4: 1/12*X^7 + 1/6*X^6 + 1/4*X^5 + 1/4*X^4 + 1/6*X^3 + 1/12*X^2";
             Assert.AreEqual(expected, actual);
         }
 
@@ -61,7 +61,7 @@ namespace DPRCalculatorTests
             Die d3 = new Die(3);
             Die single10 = new Die([10]);
             string actual = Die.SubtractDice(single10, d3).ToString();
-            string expected = "1/3*X^9 + 1/3*X^8 + 1/3*X^7";
+            string expected = "d{10}-d3: 1/3*X^9 + 1/3*X^8 + 1/3*X^7";
             Assert.AreEqual(expected, actual);
         }
 
@@ -71,7 +71,7 @@ namespace DPRCalculatorTests
             Die d3 = new Die(3);
             Die single10 = new Die([10]);
             string actual = Die.SubtractDice(Die.AddDice(d3,single10), d3).ToString();
-            string expected = "1/9*X^12 + 2/9*X^11 + 1/3*X^10 + 2/9*X^9 + 1/9*X^8";
+            string expected = "d3+d{10}-d3: 1/9*X^12 + 2/9*X^11 + 1/3*X^10 + 2/9*X^9 + 1/9*X^8";
             Assert.AreEqual(expected, actual);
         }
 
@@ -82,7 +82,7 @@ namespace DPRCalculatorTests
             Die d4 = new Die(4);
             Die single10 = new Die([10]);
             string actual = Die.SubtractDice(Die.AddDice(d3, single10), d4).ToString();
-            string expected = "1/12*X^12 + 1/6*X^11 + 1/4*X^10 + 1/4*X^9 + 1/6*X^8 + 1/12*X^7";
+            string expected = "d3+d{10}-d4: 1/12*X^12 + 1/6*X^11 + 1/4*X^10 + 1/4*X^9 + 1/6*X^8 + 1/12*X^7";
             Assert.AreEqual(expected, actual);
         }
 
@@ -91,7 +91,7 @@ namespace DPRCalculatorTests
         {
             Die d3 = new Die(3);
             string actual = Die.MultiplyDie(d3, 2).ToString();
-            string expected = "1/9*X^6 + 2/9*X^5 + 1/3*X^4 + 2/9*X^3 + 1/9*X^2";
+            string expected = "2(d3): 1/9*X^6 + 2/9*X^5 + 1/3*X^4 + 2/9*X^3 + 1/9*X^2";
             Assert.AreEqual(expected, actual);  
         }
 
@@ -100,7 +100,7 @@ namespace DPRCalculatorTests
         {
             Die d3 = new Die(3);
             string actual = Die.MultiplyDie(d3, 3).ToString();
-            string expected = "1/27*X^9 + 1/9*X^8 + 2/9*X^7 + 7/27*X^6 + 2/9*X^5 + 1/9*X^4 + 1/27*X^3";
+            string expected = "3(d3): 1/27*X^9 + 1/9*X^8 + 2/9*X^7 + 7/27*X^6 + 2/9*X^5 + 1/9*X^4 + 1/27*X^3";
             Assert.AreEqual(expected, actual);
         }
 
@@ -109,7 +109,7 @@ namespace DPRCalculatorTests
         {
             Die d3 = new Die(3);
             string actual = Die.MultiplyDice(d3, d3).ToString();
-            string expected = "1/9*X^9 + 2/9*X^6 + 1/9*X^4 + 2/9*X^3 + 2/9*X^2 + 1/9*X";
+            string expected = "d3*d3: 1/9*X^9 + 2/9*X^6 + 1/9*X^4 + 2/9*X^3 + 2/9*X^2 + 1/9*X";
             Assert.AreEqual(expected, actual);
         }
 
@@ -119,7 +119,7 @@ namespace DPRCalculatorTests
             Die d3 = new Die(3);
             Die d4 = new Die(4);
             string actual = Die.MultiplyDice(d3, d4).ToString();
-            string expected = "1/12*X^12 + 1/12*X^9 + 1/12*X^8 + 1/6*X^6 + 1/6*X^4 + 1/6*X^3 + 1/6*X^2 + 1/12*X";
+            string expected = "d3*d4: 1/12*X^12 + 1/12*X^9 + 1/12*X^8 + 1/6*X^6 + 1/6*X^4 + 1/6*X^3 + 1/6*X^2 + 1/12*X";
             Assert.AreEqual(expected, actual);
         }
 
@@ -128,7 +128,7 @@ namespace DPRCalculatorTests
         {
             Die d3 = new Die(3);
             string actual = Die.HighestOf(d3, d3).ToString();
-            string expected = "5/9*X^3 + 1/3*X^2 + 1/9*X";
+            string expected = "MaxOf(d3,d3): 5/9*X^3 + 1/3*X^2 + 1/9*X";
             Assert.AreEqual(expected, actual);
         }
 
@@ -138,7 +138,7 @@ namespace DPRCalculatorTests
             Die d3 = new Die(3);
             Die d4 = new Die(4);
             string actual = Die.HighestOf(d3, d4).ToString();
-            string expected = "1/4*X^4 + 5/12*X^3 + 1/4*X^2 + 1/12*X";
+            string expected = "MaxOf(d3,d4): 1/4*X^4 + 5/12*X^3 + 1/4*X^2 + 1/12*X";
             Assert.AreEqual(expected, actual);
         }
 
@@ -147,7 +147,7 @@ namespace DPRCalculatorTests
         {
             Die d3 = new Die(3);
             string actual = Die.LowestOf(d3, d3).ToString();
-            string expected = "1/9*X^3 + 1/3*X^2 + 5/9*X";
+            string expected = "MinOf(d3,d3): 1/9*X^3 + 1/3*X^2 + 5/9*X";
             Assert.AreEqual(expected, actual);
         }
 
@@ -157,7 +157,7 @@ namespace DPRCalculatorTests
             Die d3 = new Die(3);
             Die d4 = new Die(4);
             string actual = Die.LowestOf(d3, d4).ToString();
-            string expected = "1/6*X^3 + 1/3*X^2 + 1/2*X";
+            string expected = "MinOf(d3,d4): 1/6*X^3 + 1/3*X^2 + 1/2*X";
             Assert.AreEqual(expected, actual);
         }
 
@@ -166,7 +166,7 @@ namespace DPRCalculatorTests
         {
             Die d4 = new Die(4);
             string actual = Die.RerollOnce(d4, 2).ToString();
-            string expected = "3/8*X^4 + 3/8*X^3 + 1/8*X^2 + 1/8*X";
+            string expected = "(d4)ro<2: 3/8*X^4 + 3/8*X^3 + 1/8*X^2 + 1/8*X";
             Assert.AreEqual(expected, actual);
         }
 
@@ -176,7 +176,7 @@ namespace DPRCalculatorTests
             Die d3 = new Die(3);
             Die _2d3 = Die.MultiplyDie(d3, 2);
             string actual = Die.RerollOnce(_2d3, 3).ToString();
-            string expected = "4/27*X^6 + 8/27*X^5 + 4/9*X^4 + 2/27*X^3 + 1/27*X^2";
+            string expected = "(2(d3))ro<3: 4/27*X^6 + 8/27*X^5 + 4/9*X^4 + 2/27*X^3 + 1/27*X^2";
             Assert.AreEqual(expected, actual);
         }
 

@@ -10,7 +10,8 @@ namespace DPRCalculator
 {
     public class Die
     {
-        public Polynomial<BigRational> GenFunct { get; set; }
+        public Polynomial<BigRational> GenFunct { get; }
+        public string Name { get; }
 
         public Die(int sides) 
         {
@@ -20,6 +21,7 @@ namespace DPRCalculator
                 Term<BigRational>[] term = [new Term<BigRational>(BigRational.Divide(new BigRational(1), new BigRational(sides)), i+1)];
                 GenFunct = Polynomial<BigRational>.Add(GenFunct,new Polynomial<BigRational>(term));
             }
+            Name = $"d{sides}";
         }
         public Die(int[] sides)
         {
@@ -29,20 +31,31 @@ namespace DPRCalculator
                 Term<BigRational>[] term = [new Term<BigRational>(BigRational.Divide(new BigRational(1), new BigRational(sides.Length)), sides[i])];
                 GenFunct = Polynomial<BigRational>.Add(GenFunct, new Polynomial<BigRational>(term));
             }
+            Name = "d{";
+            for (int i = 0;i < sides.Length;i++)
+            {
+                Name += sides[i];
+                if (!(i==sides.Length-1)) 
+                {
+                    Name += ",";
+                }
+            }
+            Name += "}";
         }
 
-        public Die(Polynomial<BigRational> genFunct)
+        public Die(Polynomial<BigRational> genFunct, string name)
         {
             GenFunct = genFunct;
+            Name = name;
         }
 
         public static Die AddDice(Die left, Die right)
         {
-            return new Die(Polynomial<BigRational>.Multiply(left.GenFunct, right.GenFunct));
+            return new Die(Polynomial<BigRational>.Multiply(left.GenFunct, right.GenFunct), $"{left.Name}+{right.Name}");
         }
         public static Die MultiplyDie(Die die, int count)
         {
-            return new Die(Polynomial<BigRational>.Pow(die.GenFunct, count));
+            return new Die(Polynomial<BigRational>.Pow(die.GenFunct, count), $"{count}({die.Name})");
         }
 
         //Fails if any result is negative
@@ -59,7 +72,7 @@ namespace DPRCalculator
                     poly = Polynomial<BigRational>.Add(poly, new Polynomial<BigRational>(term));
                 }
             }
-            return new Die(poly);
+            return new Die(poly, $"{left.Name}-{right.Name}");
         }
         public static Die MultiplyDice(Die left, Die right)
         {
@@ -74,7 +87,7 @@ namespace DPRCalculator
                     poly = Polynomial<BigRational>.Add(poly, new Polynomial<BigRational>(term));
                 }
             }
-            return new Die(poly);
+            return new Die(poly, $"{left.Name}*{right.Name}");
         }
 
         public static Die HighestOf(Die left, Die right)
@@ -90,7 +103,7 @@ namespace DPRCalculator
                     poly = Polynomial<BigRational>.Add(poly, new Polynomial<BigRational>(term));
                 }
             }
-            return new Die(poly);
+            return new Die(poly, $"MaxOf({left.Name},{right.Name})");
         }
         public static Die LowestOf(Die left, Die right)
         {
@@ -105,7 +118,7 @@ namespace DPRCalculator
                     poly = Polynomial<BigRational>.Add(poly, new Polynomial<BigRational>(term));
                 }
             }
-            return new Die(poly);
+            return new Die(poly, $"MinOf({left.Name},{right.Name})");
         }
         public static Die RerollOnce(Die die, int lessthan)
         {
@@ -127,7 +140,7 @@ namespace DPRCalculator
                     poly = Polynomial<BigRational>.Add(poly, new Polynomial<BigRational>(term));
                 }
             }
-            return new Die(poly);
+            return new Die(poly, $"({die.Name})ro<{lessthan}");
         }
         public static BigRational DieEqual(Die die, int number)
         {
@@ -155,7 +168,7 @@ namespace DPRCalculator
         }
         public override string ToString()
         {
-            return GenFunct.ToString();
+            return $"{Name}: {GenFunct.ToString()}";
         }
     }
 }

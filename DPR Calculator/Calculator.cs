@@ -14,10 +14,7 @@ namespace DPRCalculator
     {
         public static void Main()
         {
-            Die d6 = new Die(6);
-            Die adv = Die.HighestOf(new Die(3), new Die(3));
-            Console.WriteLine(new Polynomial<BigRational>());
-
+            
         }
     }
 }
