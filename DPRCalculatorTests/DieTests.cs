@@ -179,5 +179,41 @@ namespace DPRCalculatorTests
             string expected = "4/27*X^6 + 8/27*X^5 + 4/9*X^4 + 2/27*X^3 + 1/27*X^2";
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void DieGreaterOrEqualUniform()
+        {
+            Die d3 = new Die(3);
+            string actual = Die.DieGreaterOrEqual(d3, 2).ToString();
+            string expected = "2/3";
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void DieGreaterOrEquaNonlUniform()
+        {
+            Die die = new Die([1,2,2,2,2,3,4]);
+            string actual = Die.DieGreaterOrEqual(die, 3).ToString();
+            string expected = "2/7";
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void DieEqualUniform()
+        {
+            Die d3 = new Die(3);
+            string actual = Die.DieEqual(d3, 2).ToString();
+            string expected = "1/3";
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void DieEquaNonlUniform()
+        {
+            Die die = new Die([1, 2, 2, 2, 2, 3, 4]);
+            string actual = Die.DieEqual(die, 3).ToString();
+            string expected = "1/7";
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

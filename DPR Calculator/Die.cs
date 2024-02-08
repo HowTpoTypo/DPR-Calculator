@@ -129,6 +129,30 @@ namespace DPRCalculator
             }
             return new Die(poly);
         }
+        public static BigRational DieEqual(Die die, int number)
+        {
+            BigRational chance = new(0);
+            foreach (var term in die.GenFunct.Terms)
+            {
+                if (term.Exponent == number)
+                {
+                    chance += term.CoEfficient;
+                }
+            }            
+            return chance;
+        }
+        public static BigRational DieGreaterOrEqual(Die die, int number)
+        {
+            BigRational chance = new(0);
+            foreach (var term in die.GenFunct.Terms)
+            {
+                if (term.Exponent >= number)
+                {
+                    chance += term.CoEfficient;
+                }
+            }
+            return chance;
+        }
         public override string ToString()
         {
             return GenFunct.ToString();
