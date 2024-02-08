@@ -54,6 +54,11 @@ namespace DPRCalculator
             Name = name;
         }
 
+        public static Die WeightDie(Die die, BigRational weight)
+        {
+            return new Die(Polynomial<BigRational>.Multiply(die.GenFunct, new Polynomial<BigRational>([new Term<BigRational>(weight,0)])), die.Name);
+        }
+
         public static Die AddDice(Die left, Die right)
         {
             return new Die(Polynomial<BigRational>.Multiply(left.GenFunct, right.GenFunct), $"{left.Name}+{right.Name}");
@@ -171,9 +176,13 @@ namespace DPRCalculator
             }
             return chance;
         }
+        public BigRational Expected()
+        {
+            return Polynomial<BigRational>.GetDerivativePolynomial(GenFunct).Evaluate(1);
+        }
         public override string ToString()
         {
-            return $"{Name}: {GenFunct.ToString()}";
+            return $"{Name}: {GenFunct}";
         }
     }
 }

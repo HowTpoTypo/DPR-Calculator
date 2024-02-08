@@ -1,5 +1,6 @@
 using System;
 using DPRCalculator;
+using ExtendedNumerics;
 
 namespace DPRCalculatorTests
 {
@@ -33,6 +34,43 @@ namespace DPRCalculatorTests
             Die die = new Die(sides);
             string actual = die.ToString();
             string expected = "d{1,8,8,12,12}: 2/5*X^12 + 2/5*X^8 + 1/5*X";
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void WeightDie0()
+        {
+            Die die = new Die(6);
+            string actual = Die.WeightDie(die,0).ToString();
+            string expected = "d6: 0";
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void WeightDie1()
+        {
+            Die die = new Die(6);
+            string actual = Die.WeightDie(die, 1).ToString();
+            string expected = "d6: 1/6*X^6 + 1/6*X^5 + 1/6*X^4 + 1/6*X^3 + 1/6*X^2 + 1/6*X";
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void WeightDieUniform()
+        {
+            Die die = new Die(6);
+            string actual = Die.WeightDie(die, new BigRational(1,2)).ToString();
+            string expected = "d6: 1/12*X^6 + 1/12*X^5 + 1/12*X^4 + 1/12*X^3 + 1/12*X^2 + 1/12*X";
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void WeightDieNonUniform()
+        {
+            int[] sides = { 1, 8, 8, 12, 12 };
+            Die die = new Die(sides);
+            string actual = Die.WeightDie(die, new BigRational(1, 2)).ToString();
+            string expected = "d{1,8,8,12,12}: 1/5*X^12 + 1/5*X^8 + 1/10*X";
             Assert.AreEqual(expected, actual);
         }
 
@@ -223,6 +261,24 @@ namespace DPRCalculatorTests
             Die die = new Die([1, 2, 2, 2, 2, 3, 4]);
             string actual = Die.DieEqual(die, 3).ToString();
             string expected = "1/7";
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void ExpectedUniform()
+        {
+            Die die = new Die(6);
+            BigRational actual = die.Expected();
+            BigRational expected = new(7,2);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void ExpectedNonUniform()
+        {
+            Die die = new Die([1, 2, 2, 2, 2, 3, 4]);
+            BigRational actual = die.Expected();
+            BigRational expected = new(16, 7);
             Assert.AreEqual(expected, actual);
         }
     }
