@@ -13,12 +13,17 @@ namespace DPRCalculator
         public Polynomial<BigRational> GenFunct { get; }
         public string Name { get; }
 
+        public Die()
+        {
+            GenFunct = new Polynomial<BigRational>([new Term<BigRational>(1,0)]);
+            Name = "d0";
+        }
         public Die(int sides) 
         {
             GenFunct = new Polynomial<BigRational>();
             for (int i = 0; i < sides; i++) 
             {
-                Term<BigRational>[] term = [new Term<BigRational>(BigRational.Divide(new BigRational(1), new BigRational(sides)), i+1)];
+                Term<BigRational>[] term = [new Term<BigRational>(BigRational.Divide(1, new BigRational(sides)), i+1)];
                 GenFunct = Polynomial<BigRational>.Add(GenFunct,new Polynomial<BigRational>(term));
             }
             Name = $"d{sides}";
@@ -28,7 +33,7 @@ namespace DPRCalculator
             GenFunct = new Polynomial<BigRational>();
             for (int i = 0; i < sides.Length; i++)
             {
-                Term<BigRational>[] term = [new Term<BigRational>(BigRational.Divide(new BigRational(1), new BigRational(sides.Length)), sides[i])];
+                Term<BigRational>[] term = [new Term<BigRational>(BigRational.Divide(1, new BigRational(sides.Length)), sides[i])];
                 GenFunct = Polynomial<BigRational>.Add(GenFunct, new Polynomial<BigRational>(term));
             }
             Name = "d{";

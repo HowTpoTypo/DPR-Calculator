@@ -1,5 +1,5 @@
-using DPRCalculator;
 using System;
+using DPRCalculator;
 
 namespace DPRCalculatorTests
 {
@@ -52,6 +52,16 @@ namespace DPRCalculatorTests
             Die d4 = new Die(4);    
             string actual = Die.AddDice(d3, d4).ToString();
             string expected = "d3+d4: 1/12*X^7 + 1/6*X^6 + 1/4*X^5 + 1/4*X^4 + 1/6*X^3 + 1/12*X^2";
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void AddD0()
+        {
+            Die d3 = new Die(3);
+            Die d0 = new Die();
+            string actual = Die.AddDice(d3, d0).ToString();
+            string expected = "d3+d0: 1/3*X^3 + 1/3*X^2 + 1/3*X";
             Assert.AreEqual(expected, actual);
         }
 
